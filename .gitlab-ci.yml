@@ -85,6 +85,6 @@ deploy:
     - ssh-keyscan $REMOTE_HOST >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
   script:
-    - ssh $SSH_USER@$REMOTE_HOST "bash -c '/home/raphael/twitch-notifier/start.sh'"
+    - ssh $SSH_USER@$REMOTE_HOST "bash -c 'sudo /home/raphael/twitch-notifier/start.sh'"
   only:
     - main
