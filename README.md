@@ -1,5 +1,8 @@
 # Discord Twitch Live Notification
 
+[![pipeline status](https://gitlab.com/Deko.dev/discord-twitch-live-notifier/badges/main/pipeline.svg)](https://gitlab.com/Deko.dev/discord-twitch-live-notifier/-/commits/main) 
+[![coverage report](https://gitlab.com/Deko.dev/discord-twitch-live-notifier/badges/main/coverage.svg)](https://gitlab.com/Deko.dev/discord-twitch-live-notifier/-/commits/main)
+
 This is a python project to send a Discord webhook with a self-updating webhook 
 when a specified streamer goes live on Twitch.  
 Checks and updates exactly once every half minute.
