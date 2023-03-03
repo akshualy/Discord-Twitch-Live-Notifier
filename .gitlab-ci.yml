@@ -14,9 +14,9 @@ stages:
     image: python:3.11.2
     only:
       changes:
-        - "/poetry.lock"
-        - "/pyproject.toml"
-        - "/app/*"
+        - "poetry.lock"
+        - "pyproject.toml"
+        - "app/*"
 
 .test:
     extends: .base

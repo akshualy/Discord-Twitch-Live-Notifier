@@ -2,6 +2,7 @@ import os
 
 import requests
 from loguru import logger
+
 from app.twitch_client import StreamInformation
 
 
@@ -15,7 +16,7 @@ class DiscordClient:
         self, stream: StreamInformation, profile_image: str
     ) -> str:
         logger.info("Sending a message with an embed to the webhook...")
-        streamer_url = f"https://www.twitch.tv/{stream.user_login}/"
+        streamer_url = f"https://www.twitch.tv/{stream.user_login}"
         response = requests.post(
             url=f"{self._webhook_url}?wait=true",
             json={
@@ -61,7 +62,7 @@ class DiscordClient:
         self, stream: StreamInformation, profile_image: str
     ) -> None:
         logger.info("Updating stream information on Discord...")
-        streamer_url = f"https://www.twitch.tv/{stream.user_login}/"
+        streamer_url = f"https://www.twitch.tv/{stream.user_login}"
         response = requests.patch(
             url=f"{self._webhook_url}/messages/{self._notification_msg_id}",
             json={
