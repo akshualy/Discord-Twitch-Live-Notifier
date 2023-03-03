@@ -2,7 +2,6 @@ import os
 
 import requests
 from loguru import logger
-
 from twitch_client import StreamInformation
 
 

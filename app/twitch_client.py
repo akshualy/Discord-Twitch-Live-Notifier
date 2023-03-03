@@ -34,10 +34,8 @@ class StreamInformation:
 
     @property
     def thumbnail_url(self):
-        return (
-            self._thumbnail_url
-            .replace("{width}", "1280")
-            .replace("{height}", "720")
+        return self._thumbnail_url.replace("{width}", "1280").replace(
+            "{height}", "720"
         )
 
 
@@ -145,7 +143,7 @@ class TwitchClient:
             started_at=stream_data.get("started_at"),
             _thumbnail_url=self._cache_prevent.prevent_cache_on_url(
                 url=stream_data.get("thumbnail_url"),
-            )
+            ),
         )
 
     def get_vod(self, user_id: str, is_retry: bool = False) -> str | None:
