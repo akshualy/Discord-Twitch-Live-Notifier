@@ -1,0 +1,45 @@
+stages:
+  - lint
+  - build
+
+.install-deps-script: &install-deps
+    - curl -sSL https://install.python-poetry.org | python -
+    - export PATH=$PATH:$HOME/.local/bin
+    - poetry --version
+    - poetry install
+
+.base:
+    image: python:3.11.2
+
+.lint:
+    extends: .base
+    stage: lint
+    before_script:
+        - *install-deps
+
+black:
+    extends: .lint
+    script:
+        - poetry run black . --check --verbose --diff
+
+isort:
+    extends: .lint
+    script:
+        - poetry run isort --check .
+
+
+build:
+    stage: build
+    image: docker:23.0.1
+    services:
+        - name: docker:23.0.1-dind
+          alias: docker
+    variables:
+        DOCKER_HOST: tcp://docker:2375
+        DOCKER_DRIVER: overlay2
+        DOCKER_TLS_CERTDIR: ""
+        IMAGE_TAG: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
+    script:
+        - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+        - docker build -f Dockerfile -t $IMAGE_TAG --build-arg version=$CI_COMMIT_SHA .
+        - docker push $IMAGE_TAG
