@@ -81,10 +81,10 @@ build:
         - docker push $IMAGE_TAG
     only:
       changes:
-        - "/Dockerfile"
-        - "/poetry.lock"
-        - "/pyproject.toml"
-        - "/app/*"
+        - "Dockerfile"
+        - "poetry.lock"
+        - "pyproject.toml"
+        - "app/*"
 
 ######################################
 #                                    #
