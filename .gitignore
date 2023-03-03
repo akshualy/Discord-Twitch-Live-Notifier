@@ -1,3 +1,11 @@
+# Locally specific files
 .env
 .idea/
-.idea/vcs.xml
+
+# Cache
+__pycache__/
+*.pyc
+
+# Tests and Coverage
+.pytest_cache/
+.coverage*

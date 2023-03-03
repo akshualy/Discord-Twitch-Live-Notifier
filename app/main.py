@@ -1,10 +1,10 @@
 import os
 import time
 
-from discord_client import DiscordClient
+from app.discord_client import DiscordClient
+from app.twitch_client import StreamInformation, TwitchClient
 from loguru import logger
 from requests import HTTPError
-from twitch_client import StreamInformation, TwitchClient
 
 
 class Main:

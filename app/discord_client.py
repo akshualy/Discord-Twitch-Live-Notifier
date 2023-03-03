@@ -2,7 +2,7 @@ import os
 
 import requests
 from loguru import logger
-from twitch_client import StreamInformation
+from app.twitch_client import StreamInformation
 
 
 class DiscordClient:

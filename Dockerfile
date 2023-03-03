@@ -12,4 +12,4 @@ RUN curl -sSL https://install.python-poetry.org | python3 -
 ENV PATH=/root/.local/bin:$PATH
 RUN poetry install
 
-CMD ["poetry", "run", "python", "app/main.py"]
+CMD ["poetry", "run", "python", "-m" , "app.main"]

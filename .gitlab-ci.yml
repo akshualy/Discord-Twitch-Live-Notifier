@@ -1,5 +1,6 @@
 stages:
   - lint
+  - test
   - build
   - deploy
 
@@ -11,17 +12,24 @@ stages:
 
 .base:
     image: python:3.11.2
+    only:
+      changes:
+        - "/poetry.lock"
+        - "/pyproject.toml"
+        - "/app/*"
+
+.test:
+    extends: .base
+    stage: test
+    before_script:
+        - *install-deps
 
 .lint:
     extends: .base
     stage: lint
     before_script:
         - *install-deps
-    only:
-      changes:
-        - "/poetry.lock"
-        - "/pyproject.toml"
-        - "/app/*"
+
 ######################################
 #                                    #
 #             LINT STEPS             #
@@ -37,6 +45,18 @@ isort:
     extends: .lint
     script:
         - poetry run isort --check .
+
+######################################
+#                                    #
+#             TEST STEPS             #
+#                                    #
+######################################
+
+test:
+    extends: .test
+    coverage: '/TOTAL.*\s+(\d+\%)/'
+    script:
+        - poetry run pytest --cov -v
 
 ######################################
 #                                    #
