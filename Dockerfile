@@ -1,6 +1,9 @@
 FROM python:3.11.2
 
-COPY ./ /
+COPY /poetry.lock /poetry.lock
+COPY /pyproject.toml /pyproject.toml
+COPY ./app /app
+
 WORKDIR /
 RUN apt-get update
 RUN apt-get -y dist-upgrade

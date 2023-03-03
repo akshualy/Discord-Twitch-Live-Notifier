@@ -56,3 +56,7 @@ python app/main.py
 ## Running in Docker
 
 The second option is to run the project's docker image. 
+
+You have two paths you can take here as well:
+1. You may fork the project and use the configured pipelines and container registry.
+2. You may build the image yourself using the Dockerfile.
