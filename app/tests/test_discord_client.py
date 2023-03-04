@@ -46,7 +46,7 @@ def test_send_information_to_discord(mock_loggers):
     embed: dict[str, Any] = json.loads(webhook_call.text)["embeds"][0]
     assert embed["title"] == "title"
     assert embed["timestamp"] == "never"
-    assert embed["url"] == f"https://www.twitch.tv/test"
+    assert embed["url"] == "https://www.twitch.tv/test"
     assert embed["author"]["name"] == "Test"
     assert embed["author"]["url"] == embed["url"]
     assert embed["author"]["icon_url"] == "profile_image.png"
