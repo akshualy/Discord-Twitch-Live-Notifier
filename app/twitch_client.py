@@ -5,6 +5,7 @@ from dataclasses import dataclass
 import requests
 from loguru import logger
 from requests import HTTPError
+from urllib3.exceptions import NewConnectionError
 
 
 @dataclass
@@ -105,14 +106,18 @@ class TwitchClient:
         return response.json()["data"][0]["profile_image_url"]
 
     def get_stream(self, is_retry: bool = False) -> StreamInformation | None:
-        response = requests.get(
-            url="https://api.twitch.tv/helix/streams",
-            headers={
-                "Client-Id": self._client_id,
-                "Authorization": f"Bearer {self._access_token}",
-            },
-            params={"user_login": self.streamer},
-        )
+        try:
+            response = requests.get(
+                url="https://api.twitch.tv/helix/streams",
+                headers={
+                    "Client-Id": self._client_id,
+                    "Authorization": f"Bearer {self._access_token}",
+                },
+                params={"user_login": self.streamer},
+            )
+        except NewConnectionError:
+            logger.warning("Twitch API is not reachable at the moment.")
+            return None
 
         if response.status_code == 401:
             logger.info("Getting streams returned an auth issue.")
@@ -147,14 +152,18 @@ class TwitchClient:
         )
 
     def get_vod(self, user_id: str, is_retry: bool = False) -> str | None:
-        response = requests.get(
-            url="https://api.twitch.tv/helix/videos",
-            headers={
-                "Client-Id": self._client_id,
-                "Authorization": f"Bearer {self._access_token}",
-            },
-            params={"user_id": user_id},
-        )
+        try:
+            response = requests.get(
+                url="https://api.twitch.tv/helix/videos",
+                headers={
+                    "Client-Id": self._client_id,
+                    "Authorization": f"Bearer {self._access_token}",
+                },
+                params={"user_id": user_id},
+            )
+        except NewConnectionError:
+            logger.warning("Twitch API is not reachable at the moment.")
+            return None
 
         if response.status_code == 401:
             logger.info("Getting vod returned an auth issue.")
