@@ -53,7 +53,7 @@ Replace `source .env` with your OS' appropriate way of loading environment varia
 ```bash
 poetry shell
 source .env
-python app/main.py
+python -m app.main
 ```
 
 ## Running in Docker
