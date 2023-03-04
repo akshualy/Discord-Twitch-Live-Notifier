@@ -41,6 +41,11 @@ black:
     script:
         - poetry run black . --check --verbose --diff
 
+flake8:
+    extends: .lint
+    script:
+        - poetry run flake8
+
 isort:
     extends: .lint
     script:
