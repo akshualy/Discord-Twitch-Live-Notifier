@@ -14,7 +14,7 @@ class DiscordClient:
 
     def send_information_to_discord(
         self, stream: StreamInformation, profile_image: str
-    ) -> str:
+    ) -> None:
         logger.info("Sending a message with an embed to the webhook...")
         streamer_url = f"https://www.twitch.tv/{stream.user_login}"
         response = requests.post(
@@ -56,7 +56,6 @@ class DiscordClient:
 
         self._notification_msg_id = response.json()["id"]
         logger.info("Stream information sent with ping to Discord.")
-        return self._notification_msg_id
 
     def update_information_on_discord(
         self, stream: StreamInformation, profile_image: str
