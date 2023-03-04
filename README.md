@@ -8,9 +8,93 @@ when a specified streamer goes live on Twitch.
 Checks and updates exactly once every half minute.
 
 The motivation behind this project is that requiring discord.js or the twitch api library is too much in my opinion.
-Doing this requires 7 API calls, including the really basic authentication in twitch's case. 
+The same goes for having to invite a bot just for this purpose.  
+The project does 7 API calls, including the really basic authentication in twitch's case.
 
-All options to run this require environment variables. You can see them in [this file](.env).
+**Table of contents**
+1. [Environment variables (Configuration)](#environment-variables-configuration)
+2. [Running in docker](#running-in-docker)
+   1. [Using the pre-built docker image from the registry](#using-the-pre-built-docker-image-from-the-registry)
+   2. [Building the image yourself](#building-the-image-yourself)
+3. [Running locally](#running-locally)
+   1. [Install prerequisites](#install-prerequisites)
+   2. [Install dependencies](#install-dependencies)
+   3. [Run the app](#run-the-app)
+
+## Environment variables (Configuration)
+
+All options to run this require environment variables. You can see them in [this file](.env.example).
+
+**STREAMER_NAME**
+
+This is the easiest one. It holds the all lowercase username of the streamer you wish to notify for.
+
+Examples: `kaicenat`, `xqc`, `esl_csgo`, `steve_the_streamer`, etc.
+
+**DISCORD_WEBHOOK_URL**
+
+Your Discord webhook URL. Acquiring one requires the `Manage Webhooks` permission on Discord.
+
+1. Hover a channel in the server you wish to notify in.
+2. Click `Edit Channel` (the cog icon on the right).
+3. Go to `Integrations`.
+4. Click `Create Webhook` or `Edit Webhooks`, depending on if the channel already has webhooks.
+5. Click `New Webhook` (Skip if using an existing one).
+6. Click the webhook in the overview, it will expand.
+   1. You can give it a name, but the app by default sets it itself.
+7. Click `Copy Webhook URL`.
+
+Now you have your webhook URL in your clipboard and can paste it into your .env file.
+
+**TWITCH_CLIENT_ID** and **TWITCH_CLIENT_SECRET**
+
+The bread and butter variables of this application. These are needed to query the Twitch API.  
+Please refer to [the official documentation](https://dev.twitch.tv/docs/authentication/register-app/) on how to register an app.
+As part of the documentation steps you will generate a client ID and client secret.
+Use those in the .env file.
+
+## Running in Docker
+
+The first option - and the option I use - is to run the project's docker image. 
+
+You have two paths you can take here as well:
+1. You may fork the project and use the configured pipelines and container registry.
+2. You may build the image yourself using the Dockerfile.
+
+### Using the pre-built docker image from the registry
+
+The pipeline builds your image into your docker registry at  
+`registry.gitlab.com/<YOUR USERNAME>/discord-twitch-live-notifier:main`.
+
+In my case that's `registry.gitlab.com/dekorated/discord-twitch-live-notifier:main`.
+
+You can use that to pull your image:
+```bash
+docker image pull registry.gitlab.com/dekorated/discord-twitch-live-notifier:main
+```
+
+**Note**: If you use a private repository,you will have to `docker login registry.gitlab.com`
+with your username and a gitlab access token as password first.
+
+Then run the image. Take note to adjust the path at `--env-file`.
+```bash
+docker run \
+    --name discord-twitch-live-notifier \
+    --env-file /path/to/your/env-file/.env \
+    -d \
+    registry.gitlab.com/dekorated/discord-twitch-live-notifier:main
+```
+Your OS may treat line breaks in commands differently, please adjust accordingly. 
+The above is tested on linux/debian.
+
+### Building the image yourself
+
+You may also build the image yourself locally:
+```commandline
+docker build -f Dockerfile -t some_image_tag --build-arg .
+```
+
+And then run the image with the same instructions as above.
 
 ## Running locally
 
@@ -55,11 +139,3 @@ poetry shell
 source .env
 python -m app.main
 ```
-
-## Running in Docker
-
-The second option is to run the project's docker image. 
-
-You have two paths you can take here as well:
-1. You may fork the project and use the configured pipelines and container registry.
-2. You may build the image yourself using the Dockerfile.
