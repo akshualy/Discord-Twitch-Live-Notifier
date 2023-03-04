@@ -113,7 +113,8 @@ class DiscordClient:
                 "username": "Oak Tree",
                 "avatar_url": "https://i.imgur.com/DBOuwjx.png",
                 "content": (
-                    f"{streamer_name} stopped the stream. VOD: \n{vod_url}"
+                    f"{streamer_name} stopped the stream. Check out the VOD!"
+                    f"\n{vod_url}"
                 ),
                 "embeds": [],
             },
