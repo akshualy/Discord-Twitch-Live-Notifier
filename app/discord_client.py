@@ -22,7 +22,7 @@ class DiscordClient:
             json={
                 "username": "Oak Tree",
                 "avatar_url": "https://i.imgur.com/DBOuwjx.png",
-                "content": "@everyone",
+                "content": f"@everyone {stream.user_name} went live!",
                 "embeds": [
                     {
                         "title": stream.title,
