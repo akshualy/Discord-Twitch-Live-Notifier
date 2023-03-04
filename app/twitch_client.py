@@ -18,6 +18,7 @@ class CachePrevent:
         self.calls += 1
         if self.calls % self.five_minute_update_modulo == 0:
             self.random_number = random.randint(0, 999999)
+            logger.info("Forcing image cache refresh.")
 
         return f"{url}?{self.random_number}"
 
