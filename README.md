@@ -55,15 +55,20 @@ Use those in the .env file.
 
 ## Running in Docker
 
-The first option - and the option I use - is to run the project's docker image. 
+The first option - and the option I use - is to run the project's docker image.  
+It has the benefit of being able to run multiple instances at the same time.  
+*Note: There is a limit by Twitch for how many access tokens you can have active at the same time for the same twitch client.*
 
-You have two paths you can take here as well:
-1. You may fork the project and use the configured pipelines and container registry.
+You have two paths you can take here:
+1. You may use this project's docker image in the container registry.
+   1. You may also fork the project and host it in your own registry.
 2. You may build the image yourself using the Dockerfile.
+
+You can read up on how to install docker on the [official website](https://docs.docker.com/get-docker/).
 
 ### Using the pre-built docker image from the registry
 
-The pipeline builds your image into your docker registry at  
+The pipeline builds your image into your gitlab project's docker registry at  
 `registry.gitlab.com/<YOUR USERNAME>/discord-twitch-live-notifier:main`.
 
 In my case that's `registry.gitlab.com/dekorated/discord-twitch-live-notifier:main`.
@@ -87,6 +92,12 @@ docker run \
 Your OS may treat line breaks in commands differently, please adjust accordingly. 
 The above is tested on linux/debian.
 
+To stop and remove the container (app), run
+```bash
+docker stop discord-twitch-live-notifier
+docker rm discord-twitch-live-notifier 
+```
+
 ### Building the image yourself
 
 You may also build the image yourself locally:
@@ -98,7 +109,7 @@ And then run the image with the same instructions as above.
 
 ## Running locally
 
-The first option to run the project is to run it locally.
+The second option to run the project is to run it locally.
 You may install the dependencies through pip, however it is recommended to install them with the project default, [poetry](https://python-poetry.org).
 
 ### Install prerequisites
@@ -110,7 +121,7 @@ Clone the repository:
 git clone https://github.com/Gadsee/Discord-Twitch-Live-Notifications.git
 ```
 
-Install poetry. (Taken from the [official documentation](https://python-poetry.org/docs/).)
+Install poetry (taken from the [official documentation](https://python-poetry.org/docs/)):
 
 Debian-based linux distributions:
 ```bash
