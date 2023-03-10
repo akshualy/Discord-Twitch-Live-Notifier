@@ -63,7 +63,10 @@ class Main:
         )
 
 
-if __name__ == "__main__":
+DELAY_SECONDS = 30.0
+
+
+def entry():
     logger.info("Initiating main...")
     start_time = time.time()
     main = Main()
@@ -72,8 +75,14 @@ if __name__ == "__main__":
     try:
         while True:
             main.update_status()
-            time.sleep(30.0 - ((time.time() - start_time) % 30.0))
+            time.sleep(
+                DELAY_SECONDS - ((time.time() - start_time) % DELAY_SECONDS)
+            )
     except (SystemExit, KeyboardInterrupt):
         logger.info("Caught wish to exit, interrupting and re-raising.")
         main.interrupt()
         raise
+
+
+if __name__ == "__main__":  # pragma: no cover
+    entry()
