@@ -111,5 +111,6 @@ deploy:
     - chmod 644 ~/.ssh/known_hosts
   script:
     - ssh $SSH_USER@$REMOTE_HOST "sudo /etc/discord-twitch-live-notifier/start.sh"
-  only:
-    - main
+  rules:
+    - if: $CI_COMMIT_BRANCH == "main"
+      when: manual
