@@ -150,3 +150,23 @@ poetry shell
 source .env
 python -m app.main
 ```
+
+### Linting
+
+This project uses multiple linting plugins to ensure code formatting is consistent.
+
+1. `black .` is opinionated but uncompromising code formatting.
+2. `flake8` enforces style guide, i.E. PEP8.
+3. `isort .` sorts imports.
+
+Additionally, there is a pre-commit hook you can install to fix trailing whitespace, end of file and some yaml issues.
+```bash
+pre-commit install
+```
+
+You may also use it to quickly check through everything without needing to commit:
+```bash
+pre-commit run --all-files
+```
+
+Depending on your shell compatibility with poetry, you may have to prefix all of the above commands with `poetry run`.
