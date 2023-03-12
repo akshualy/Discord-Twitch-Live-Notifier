@@ -8,4 +8,4 @@ __pycache__/
 
 # Tests and Coverage
 .pytest_cache/
-.coverage*
+.coverage
