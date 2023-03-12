@@ -107,10 +107,10 @@ deploy:
     - ssh-add "$SSH_PRIVATE_KEY"
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
-    - ssh-keyscan $REMOTE_HOST 2>/dev/null >> ~/.ssh/known_hosts
+    - ssh-keyscan $REMOTE_HOST -p $SSH_PORT 2>/dev/null >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
   script:
-    - ssh $SSH_USER@$REMOTE_HOST "sudo /etc/discord-twitch-live-notifier/start.sh"
+    - ssh $SSH_USER@$REMOTE_HOST -p $SSH_PORT "sudo /etc/discord-twitch-live-notifier/start.sh"
   rules:
     - if: $CI_COMMIT_BRANCH == "main"
       when: manual
