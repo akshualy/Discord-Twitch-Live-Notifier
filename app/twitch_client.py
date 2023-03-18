@@ -116,7 +116,7 @@ class TwitchClient:
                 },
                 params={"user_login": self.streamer},
             )
-        except NewConnectionError:
+        except requests.exceptions.ConnectionError:
             logger.warning("Twitch API is not reachable at the moment.")
             return None
 
