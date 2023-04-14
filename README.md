@@ -1,7 +1,6 @@
-# Discord Twitch Live Notification
+# Discord Twitch Live Notifier
 
-[![pipeline status](https://gitlab.com/Deko.dev/discord-twitch-live-notifier/badges/main/pipeline.svg)](https://gitlab.com/Deko.dev/discord-twitch-live-notifier/-/commits/main) 
-[![coverage report](https://gitlab.com/Deko.dev/discord-twitch-live-notifier/badges/main/coverage.svg)](https://gitlab.com/Deko.dev/discord-twitch-live-notifier/-/commits/main)
+![pipeline status](https://github.com/Gadsee/DiscordTwitchLiveNotifier/actions/workflows/pipeline.yml/badge.svg)
 
 This is a python project to send a Discord webhook with a self-updating webhook 
 when a specified streamer goes live on Twitch.  
@@ -68,18 +67,18 @@ You can read up on how to install docker on the [official website](https://docs.
 
 ### Using the pre-built docker image from the registry
 
-The pipeline builds your image into your gitlab project's docker registry at  
-`registry.gitlab.com/<YOUR USERNAME>/discord-twitch-live-notifier:main`.
+The pipeline builds your image into your GitHub project's docker registry at  
+`ghcr.io/<YOUR USERNAME>/discordtwitchlivenotifier:main`.
 
-In my case that's `registry.gitlab.com/dekorated/discord-twitch-live-notifier:main`.
+In my case that's `ghcr.io/gadsee/discordtwitchlivenotifier:main`.
 
 You can use that to pull your image:
 ```bash
-docker image pull registry.gitlab.com/dekorated/discord-twitch-live-notifier:main
+docker image pull ghcr.io/<YOUR USERNAME>/discordtwitchlivenotifier:main
 ```
 
-**Note**: If you use a private repository,you will have to `docker login registry.gitlab.com`
-with your username and a gitlab access token as password first.
+**Note**: If you use a private repository,you will have to `docker login ghcr.io`
+with your username and a GitHub personal access token as password first.
 
 Then run the image. Take note to adjust the path at `--env-file`.
 ```bash
@@ -87,7 +86,7 @@ docker run \
     --name discord-twitch-live-notifier \
     --env-file /path/to/your/env-file/.env \
     -d \
-    registry.gitlab.com/dekorated/discord-twitch-live-notifier:main
+    ghcr.io/gadsee/discordtwitchlivenotifier:main
 ```
 Your OS may treat line breaks in commands differently, please adjust accordingly. 
 The above is tested on linux/debian.
@@ -118,7 +117,7 @@ You may install the dependencies through pip, however it is recommended to insta
 
 Clone the repository:
 ```commandline
-git clone https://github.com/Gadsee/Discord-Twitch-Live-Notifications.git
+git clone https://github.com/Gadsee/DiscordTwitchLiveNotifier.git
 ```
 
 Install poetry (taken from the [official documentation](https://python-poetry.org/docs/)):
