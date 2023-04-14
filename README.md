@@ -1,6 +1,6 @@
 # Discord Twitch Live Notifier
 
-![pipeline status](https://github.com/Gadsee/DiscordTwitchLiveNotifier/actions/workflows/pipeline.yml/badge.svg)
+![pipeline status](https://github.com/Gadsee/DiscordTwitchLiveNotifier/actions/workflows/pipeline.yaml/badge.svg)
 
 This is a python project to send a Discord webhook with a self-updating webhook 
 when a specified streamer goes live on Twitch.  
