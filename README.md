@@ -1,6 +1,7 @@
 # Discord Twitch Live Notifier
 
-![pipeline status](https://github.com/Gadsee/DiscordTwitchLiveNotifier/actions/workflows/pipeline.yaml/badge.svg)
+![Pipeline](https://github.com/Gadsee/Discord-Twitch-Live-Notifier/actions/workflows/pipeline.yaml/badge.svg)
+![Coverage](https://codecov.io/github/gadsee/discord-twitch-live-notifier?branch=main)
 
 This is a python project to send a Discord webhook with a self-updating webhook 
 when a specified streamer goes live on Twitch.  
@@ -68,13 +69,13 @@ You can read up on how to install docker on the [official website](https://docs.
 ### Using the pre-built docker image from the registry
 
 The pipeline builds your image into your GitHub project's docker registry at  
-`ghcr.io/<YOUR USERNAME>/discordtwitchlivenotifier:main`.
+`ghcr.io/<YOUR USERNAME>/discord-twitch-live-notifier:main`.
 
-In my case that's `ghcr.io/gadsee/discordtwitchlivenotifier:main`.
+In my case that's `ghcr.io/gadsee/discord-twitch-live-notifier:main`.
 
 You can use that to pull your image:
 ```bash
-docker image pull ghcr.io/<YOUR USERNAME>/discordtwitchlivenotifier:main
+docker image pull ghcr.io/<YOUR USERNAME>/discord-twitch-live-notifier:main
 ```
 
 **Note**: If you use a private repository,you will have to `docker login ghcr.io`
@@ -86,7 +87,7 @@ docker run \
     --name discord-twitch-live-notifier \
     --env-file /path/to/your/env-file/.env \
     -d \
-    ghcr.io/gadsee/discordtwitchlivenotifier:main
+    ghcr.io/gadsee/discord-twitch-live-notifier:main
 ```
 Your OS may treat line breaks in commands differently, please adjust accordingly. 
 The above is tested on linux/debian.
@@ -117,7 +118,7 @@ You may install the dependencies through pip, however it is recommended to insta
 
 Clone the repository:
 ```commandline
-git clone https://github.com/Gadsee/DiscordTwitchLiveNotifier.git
+git clone https://github.com/Gadsee/Discord-Twitch-Live-Notifier.git
 ```
 
 Install poetry (taken from the [official documentation](https://python-poetry.org/docs/)):
