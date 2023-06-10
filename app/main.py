@@ -66,7 +66,7 @@ class Main:
 DELAY_SECONDS = 30.0
 
 
-def entry():
+def entry() -> None:
     logger.info("Initiating main...")
     start_time = time.time()
     main = Main()
