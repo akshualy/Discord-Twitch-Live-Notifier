@@ -116,8 +116,10 @@ class TwitchClient:
                 },
                 params={"user_login": self.streamer},
             )
-        except requests.exceptions.ConnectionError:
-            logger.warning("Twitch API is not reachable at the moment.")
+        except requests.exceptions.ConnectionError as err:
+            logger.opt(exception=err).warning(
+                "Getting streams failed with a connection Error, more details below."
+            )
             return None
 
         if response.status_code == 401:
@@ -162,8 +164,10 @@ class TwitchClient:
                 },
                 params={"user_id": user_id},
             )
-        except NewConnectionError:
-            logger.warning("Twitch API is not reachable at the moment.")
+        except NewConnectionError as err:
+            logger.opt(exception=err).warning(
+                "Getting vods failed with a new connection Error, more details below."
+            )
             return None
 
         if response.status_code == 401:

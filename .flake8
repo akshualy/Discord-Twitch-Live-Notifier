@@ -1,0 +1,4 @@
+[flake8]
+max-line-length = 88
+exclude = .git,.github,build,captures,dist,venv,__pycache__
+extend-ignore = E203
