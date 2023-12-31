@@ -1,5 +1,6 @@
 import os
 import time
+from datetime import datetime
 
 from loguru import logger
 from requests import HTTPError
@@ -10,6 +11,7 @@ from app.twitch_client import StreamInformation, TwitchClient
 
 class Main:
     is_live: bool = False
+    last_live_at = None
     _previous_stream: StreamInformation = None
 
     def __init__(self):
@@ -36,9 +38,23 @@ class Main:
 
             if not self.is_live:
                 logger.info("Streamer went live.")
+                if (
+                    self.last_live_at
+                    and (datetime.now() - self.last_live_at).total_seconds()
+                    < 300
+                ):
+                    logger.info(
+                        "Streamer was already live once in the past 5 minutes. "
+                        "This is probably due to a crash, not sending the Discord ping."
+                    )
+                    self.last_live_at = datetime.now()
+                    self.is_live = True
+                    return
+
                 self.discord_client.send_information_to_discord(
                     stream=stream, profile_image=self.profile_image
                 )
+                self.last_live_at = datetime.now()
                 self.is_live = True
             else:
                 logger.info("Streamer still live.")
