@@ -5,7 +5,6 @@ from unittest import mock
 
 import pytest
 import requests_mock
-from requests import HTTPError
 
 from app.discord_client import DiscordClient
 from app.twitch_client import StreamInformation
@@ -74,12 +73,15 @@ def test_send_information_to_discord_fails(mock_loggers):
         requests_mocker.post(url="https://test", status_code=400)
 
         discord_client = DiscordClient()
-        with pytest.raises(HTTPError):
-            discord_client.send_information_to_discord(
-                stream=stream, profile_image=""
-            )
+        discord_client.send_information_to_discord(
+            stream=stream, profile_image="", retry_count=6
+        )
 
     assert len(mock_loggers.info_logger.call_args_list) == 1
     assert mock_loggers.info_logger.call_args.args[0] == (
         "Sending a message with an embed to the webhook..."
+    )
+    assert len(mock_loggers.warning_logger.call_args_list) == 1
+    assert mock_loggers.warning_logger.call_args.args[0] == (
+        "Aborted sending the embed to Discord."
     )
