@@ -116,10 +116,8 @@ class TwitchClient:
                 },
                 params={"user_login": self.streamer},
             )
-        except requests.exceptions.ConnectionError as err:
-            logger.opt(exception=err).warning(
-                "Getting streams failed with a connection Error, more details below."
-            )
+        except requests.exceptions.ConnectionError:
+            logger.warning("Getting streams failed with a connection Error.")
             return None
 
         if response.status_code == 401:
