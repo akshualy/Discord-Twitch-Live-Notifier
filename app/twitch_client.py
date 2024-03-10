@@ -25,6 +25,7 @@ class CachePrevent:
 
 @dataclass
 class StreamInformation:
+    id: str
     user_id: str
     user_name: str
     user_login: str
@@ -33,6 +34,7 @@ class StreamInformation:
     viewer_count: int
     started_at: str
     _thumbnail_url: str
+    discord_message_id: str = ""
 
     @property
     def thumbnail_url(self):
@@ -140,6 +142,7 @@ class TwitchClient:
 
         stream_data = streams[0]
         return StreamInformation(
+            id=stream_data.get("id"),
             user_id=stream_data.get("user_id"),
             user_name=stream_data.get("user_name"),
             user_login=stream_data.get("user_login"),

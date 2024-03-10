@@ -9,7 +9,7 @@ from app.twitch_client import StreamInformation
 
 
 class DiscordClient:
-    _notification_msg_id: str = ""
+    notification_msg_id: str = ""
 
     def __init__(self):
         self._webhook_url = os.environ["DISCORD_WEBHOOK_URL"]
@@ -60,7 +60,7 @@ class DiscordClient:
 
             response.raise_for_status()
 
-            self._notification_msg_id = response.json()["id"]
+            self.notification_msg_id = response.json()["id"]
             logger.info("Stream information sent with ping to Discord.")
         except (exceptions.ConnectionError, exceptions.HTTPError) as err:
             logger.opt(exception=err).warning(
@@ -85,7 +85,7 @@ class DiscordClient:
         streamer_url = f"https://www.twitch.tv/{stream.user_login}"
         try:
             response = requests.patch(
-                url=f"{self._webhook_url}/messages/{self._notification_msg_id}",
+                url=f"{self._webhook_url}/messages/{self.notification_msg_id}",
                 json={
                     "embeds": [
                         {
@@ -127,7 +127,7 @@ class DiscordClient:
         self, streamer_name, vod_url: str | None, retry_count: int = 0
     ) -> None:
         logger.info("Finalizing stream information on Discord...")
-        if not self._notification_msg_id:
+        if not self.notification_msg_id:
             logger.info("Message ID not set, nothing to finalize.")
             return
 
@@ -136,7 +136,7 @@ class DiscordClient:
 
         try:
             response = requests.patch(
-                url=f"{self._webhook_url}/messages/{self._notification_msg_id}",
+                url=f"{self._webhook_url}/messages/{self.notification_msg_id}",
                 json={
                     "username": "Oak Tree",
                     "avatar_url": "https://i.imgur.com/DBOuwjx.png",
