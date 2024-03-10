@@ -196,3 +196,5 @@ def test_run_main_streamer_already_live(mock_loggers):
     finalize_notification_request = requests_mocker.request_history[-1]
     assert finalize_notification_request.path == "/webhook/messages/123456"
     assert finalize_notification_request.json()
+
+    os.remove("streams.json")

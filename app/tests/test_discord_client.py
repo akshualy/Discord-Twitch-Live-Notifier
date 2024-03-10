@@ -17,6 +17,7 @@ def test_require_webhook_url():
 
 def test_send_information_to_discord(mock_loggers):
     stream = StreamInformation(
+        id="0",
         user_id="0",
         user_name="Test",
         user_login="test",
@@ -56,6 +57,7 @@ def test_send_information_to_discord(mock_loggers):
 
 def test_send_information_to_discord_fails(mock_loggers):
     stream = StreamInformation(
+        id="",
         user_id="",
         user_name="",
         user_login="",

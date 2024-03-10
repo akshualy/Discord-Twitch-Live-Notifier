@@ -1,6 +1,8 @@
 import json
 import os
 import time
+from dataclasses import asdict
+from json import JSONDecodeError
 
 from loguru import logger
 from requests import HTTPError
@@ -12,17 +14,20 @@ from app.twitch_client import StreamInformation, TwitchClient
 class Main:
     is_live: bool = False
     current_stream_id: str = ""
-    streams: dict[str, StreamInformation]
+    streams: dict[str, StreamInformation] = dict()
 
     def __init__(self):
         self.twitch_client = TwitchClient(streamer=os.environ["STREAMER_NAME"])
         self.twitch_client.update_access_token()
         self.profile_image = self.twitch_client.get_streamer_profile_picture()
         self.discord_client = DiscordClient()
-        with open("streams.json", "r") as file:
-            saved_streams = json.load(file)
-            for stream_id, saved_stream in saved_streams:
-                self.streams[stream_id] = StreamInformation(**saved_stream)
+        try:
+            with open("streams.json", "r") as file:
+                saved_streams = json.load(file)
+                for stream_id, saved_stream in saved_streams:
+                    self.streams[stream_id] = StreamInformation(**saved_stream)
+        except (FileNotFoundError, JSONDecodeError):
+            pass
 
     def update_status(self):
         try:
@@ -101,7 +106,10 @@ def entry() -> None:
         while True:
             main.update_status()
             with open("streams.json", "w") as file:
-                json.dump(main.streams, file)
+                serializable_streams = {
+                    k: asdict(v) for k, v in main.streams.items()
+                }
+                json.dump(serializable_streams, file)
             time.sleep(
                 DELAY_SECONDS - ((time.time() - start_time) % DELAY_SECONDS)
             )
